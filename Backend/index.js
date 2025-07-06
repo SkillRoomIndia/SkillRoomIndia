@@ -20,7 +20,7 @@ const cvSubmissionRoutes = require("./routes/cvSubmissionRoutes");
 
 // CORS Configuration
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://your-render-service.onrender.com"], // Replace with your Render URL
+  origin: ["http://localhost:5173", "https://your-render-service.onrender.com"], // Replace with actual Render URL
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
