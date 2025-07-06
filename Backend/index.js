@@ -1,4 +1,3 @@
-// index.js
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -21,13 +20,11 @@ const cvSubmissionRoutes = require("./routes/cvSubmissionRoutes");
 
 // CORS Configuration
 const corsOptions = {
-  origin: ["http://localhost:5173"], // Update this to your frontend URL in production
+  origin: ["http://localhost:5173", "https://your-render-service.onrender.com"], // Replace with your Render URL
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
 };
-
-// MIDDLEWARES
 app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
@@ -42,28 +39,20 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-// BASIC ROUTES
-// app.get("/", (req, res) => res.send("Hello world!"));
-// app.get("/health", (req, res) => res.status(200).json({ message: "Server is running" }));
-
 // API ROUTES
 app.use("/users", userRoutes);
 app.use("/users/forgot", forgotUserRoutes);
-
 app.use("/business", clientRoutes);
 app.use("/business/forgot", forgotClientRoutes);
-
 app.use("/partnership", partnershipRoutes);
 app.use("/callback", callbackRoutes);
 app.use("/business-partnership", businessPartnershipRoutes);
 app.use("/cv-submission", cvSubmissionRoutes);
 
-// SERVE FRONTEND (assuming Vite or React build in /frontend/dist)
-const _dirname = path.resolve();
-app.use(express.static(path.join(_dirname, "/frontend/dist")));
-
+// SERVE FRONTEND
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 app.get("*", (_, res) => {
-  res.sendFile(path.resolve(_dirname, "frontend", "dist", "index.html"));
+  res.sendFile(path.resolve(__dirname, "../frontend", "dist", "index.html"));
 });
 
 // ERROR HANDLERS
